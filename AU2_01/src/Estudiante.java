@@ -1,11 +1,11 @@
-public class Estuidante {
+public class Estudiante {
     private String nombre;
     private int edad;
     private String  curso;
     private double nota;
-}
 
-public Estuidante(String nombre, int edad, String curso, double nota) {
+
+public Estudiante(String nombre, int edad, String curso, double nota) {
     this.nombre = nombre;
     this.edad = edad;
     this.curso = curso;
@@ -39,4 +39,5 @@ public String toString() {
             ", curso='" + curso + '\'' +
             ", nota=" + nota +
             '}';
+}
 }
