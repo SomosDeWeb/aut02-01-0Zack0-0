@@ -1,3 +1,4 @@
+// -*- coding: utf-8 -*-
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -17,22 +18,57 @@ public class gestorEstudiantes {
             System.out.println("6. Salir");
             System.out.print("Elige una opción: ");
         
-        opcion = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
+        if (scanner.hasNextInt()) {
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer
+        } else {
+            System.out.println("Error: Por favor, introduce un número válido.");
+            scanner.nextLine(); // Limpiar el buffer
+            opcion = -1; // Asignar un valor inválido para que no se ejecute ninguna opción
+        }
 
         switch (opcion) {
             case 1:
-                System.out.print("Nombre: ");
-                String nombre = scanner.nextLine();
-                System.out.print("Edad: ");
-                int edad = scanner.nextInt();
-                scanner.nextLine(); 
-                System.out.print("Curso: ");
-                String curso = scanner.nextLine();
-                System.out.print("Nota: ");
-                double nota = scanner.nextDouble();
-                estudiantes.add(new Estudiante(nombre, edad, curso, nota));
-                System.out.println("Estudiante añadido.");
+                try {
+                    System.out.print("Nombre: ");
+                    String nombre = scanner.nextLine();
+                    
+                    // Validar nombre vacío
+                    if (nombre.trim().isEmpty()) {
+                        throw new IllegalArgumentException("El nombre no puede estar vacío");
+                    }
+                    
+                    // Validar que el nombre solo contiene letras
+                    if (!nombre.matches("^[a-zA-Z\\s]+$")) {
+                        throw new IllegalArgumentException("El nombre solo debe contener letras");
+                    }
+                    
+                    System.out.print("Edad: ");
+                    int edad = Integer.parseInt(scanner.nextLine());
+                    
+                    // Validar edad negativa
+                    if (edad < 0) {
+                        throw new IllegalArgumentException("La edad no puede ser negativa");
+                    }
+                    
+                    System.out.print("Curso: ");
+                    String curso = scanner.nextLine();
+                    
+                    System.out.print("Nota: ");
+                    double nota = Double.parseDouble(scanner.nextLine());
+                    
+                    // Validar nota negativa
+                    if (nota < 0) {
+                        throw new IllegalArgumentException("La nota no puede ser negativa");
+                    }
+                    
+                    estudiantes.add(new Estudiante(nombre, edad, curso, nota));
+                    System.out.println("Estudiante añadido correctamente.");
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Por favor, introduce un número válido.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
                 break;
             case 2:
                 System.out.println("\nLista de estudiantes:");
